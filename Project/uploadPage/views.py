@@ -5,6 +5,7 @@ from .models import Post
 from .serializers import PostSerializer
 from django.db.models import Count
 from django.db.models.functions import Lower
+import re
 
 @api_view(['GET', 'POST'])
 def post_list(request):
@@ -21,6 +22,6 @@ def post_list(request):
     
 @api_view(['GET'])
 def popular_targets(request):
-    popular_targets = Post.objects.annotate(target_name=Lower('target')).values('target_name').annotate(target_count=Count('target_name')).order_by('-target_count')
+    popular_targets = Post.objects.annotate(lower_target=Lower('target')).values('lower_target').annotate(target_count=Count('lower_target')).order_by('-target_count')
     return Response(popular_targets, status=status.HTTP_200_OK)
 
