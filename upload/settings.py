@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'uploadPage',
     'corsheaders',
-    'FeedBack',
+    'Verify',
     'trend',
 ]
 
