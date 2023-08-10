@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     'uploadPage',
     'corsheaders',
     'Verify',
-    'trend',
+
 ]
 
 MIDDLEWARE = [
