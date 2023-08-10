@@ -1,6 +1,6 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .forms import PostForm
+from rest_framework import status
 from .models import Post
 from .serializers import PostSerializer
 
@@ -11,8 +11,9 @@ def post_list(request):
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
-        form = PostForm(request.data)
-        if form.is_valid():
-            form.save()
-            return Response({'message': 'Post created successfully'}, status=201)
-        return Response(form.errors, status=400)
+        serializer = PostSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message': 'Post created successfully'}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
