@@ -3,6 +3,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Post
 from .serializers import PostSerializer
+from django.db.models import Count
+from django.db.models.functions import Lower
 
 @api_view(['GET', 'POST'])
 def post_list(request):
@@ -16,4 +18,9 @@ def post_list(request):
             serializer.save()
             return Response({'message': 'Post created successfully'}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['GET'])
+def popular_targets(request):
+    popular_targets = Post.objects.annotate(target_name=Lower('target')).values('target_name').annotate(target_count=Count('target_name')).order_by('-target_count')
+    return Response(popular_targets, status=status.HTTP_200_OK)
 
