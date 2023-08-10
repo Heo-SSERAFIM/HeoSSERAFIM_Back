@@ -21,5 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('uploadPage.urls')),
     path('verify/',include('Verify.urls') ),
-    path('trend/', include('trend.urls')),
+
 ]
